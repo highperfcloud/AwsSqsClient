@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <RootNamespace>HighPerfCloud.Aws.Sqs.Core</RootNamespace>
+    <AssemblyName>HighPerfCloud.Aws.Sqs.Core</AssemblyName>
+    <LangVersion>8.0</LangVersion>
+    <NullableContextOptions>enable</NullableContextOptions>
+  </PropertyGroup>
+
+</Project>
