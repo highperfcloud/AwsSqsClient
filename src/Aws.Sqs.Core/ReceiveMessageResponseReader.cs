@@ -15,20 +15,14 @@ namespace HighPerfCloud.Aws.Sqs.Core
         {
             if (bytes.Length == 0)
                 return 0;
-                       
-            var lengthOfStartTag = SqsResponseConstants.MessageTagStart.Length;
 
             var count = 0;
             var remainingData = bytes;
+            int index;
 
-            while(count <= MaxMessages) 
-            {               
-                var index = remainingData.IndexOf(SqsResponseConstants.MessageTagStart);
-
-                if (index == -1)
-                    break;
-
-                remainingData = remainingData.Slice(index + lengthOfStartTag);
+            while (count < MaxMessages && (index = remainingData.IndexOf(SqsResponseConstants.MessageTagStart)) != -1)
+            {
+                remainingData = remainingData.Slice(index + SqsResponseConstants.MessageTagStart.Length);
                 count++;
             }
 
