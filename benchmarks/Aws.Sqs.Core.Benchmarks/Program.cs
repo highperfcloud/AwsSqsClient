@@ -42,12 +42,5 @@ namespace Aws.Sqs.Core.Benchmarks
             var reader = new ReceiveMessageResponseReader();
             return reader.CountMessages(_responseBytes);
         }
-
-        [Benchmark]
-        public int CountMessagesV2()
-        {
-            var reader = new ReceiveMessageResponseReader();
-            return reader.CountMessagesV2(_responseBytes);
-        }
     }
 }
