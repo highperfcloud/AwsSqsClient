@@ -9,7 +9,8 @@ namespace HighPerfCloud.Aws.Sqs.Core
         /// <summary>
         /// Returns the count of messages contained within the UTF8 bytes of a ReceiveMessageResponse.
         /// </summary>
-        /// <param name="bytes">A <see cref="ReadOnlySpan{byte}"/> representing the data received from the SQS API ReceiveMessageResponse.</param>
+        /// <param name="bytes">A <see cref="ReadOnlySpan{T}"/> whose generic type argument is <see cref="byte"/> representing
+        /// the content data received from the SQS API ReceiveMessageResponse.</param>
         /// <returns>A count of the messages found in the byte data.</returns>
         public int CountMessages(in ReadOnlySpan<byte> bytes)
         {
@@ -25,7 +26,7 @@ namespace HighPerfCloud.Aws.Sqs.Core
                 remainingData = remainingData.Slice(index + SqsResponseConstants.MessageTagStart.Length);
                 count++;
             }
-
+            
             return count;
         }
     }
