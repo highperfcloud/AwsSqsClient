@@ -122,7 +122,7 @@ namespace Aws.Sqs.Client.Tests
 
             var messageFound = reader.TryGetNextMessageBytes(bytes, out var messageBytes, out var endPosition);
 
-            var messageSpanIsEqual = messageBytes.SequenceEqual(Encoding.UTF8.GetBytes(Message).AsSpan());
+            var messageSpanIsEqual = messageBytes.SequenceEqual(Encoding.UTF8.GetBytes(Message));
 
             messageFound.Should().BeTrue();
             messageSpanIsEqual.Should().BeTrue();

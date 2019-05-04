@@ -13,5 +13,8 @@ namespace HighPerfCloud.Aws.Sqs.Core
 
         public static ReadOnlySpan<byte> MessageTagStart => new[] { (byte)'<', (byte)'M', (byte)'e', (byte)'s', (byte)'s', (byte)'a', (byte)'g', (byte)'e', (byte)'>' };
         public static ReadOnlySpan<byte> MessageTagEnd => new[] { (byte)'<', (byte)'/', (byte)'M', (byte)'e', (byte)'s', (byte)'s', (byte)'a', (byte)'g', (byte)'e', (byte)'>' };
+
+        public static ReadOnlySpan<byte> MessageIdTagStart => new[] { (byte)'<', (byte)'M', (byte)'e', (byte)'s', (byte)'s', (byte)'a', (byte)'g', (byte)'e', (byte)'I', (byte)'d', (byte)'>' };
+        public static ReadOnlySpan<byte> MessageIdTagEnd => new[] { (byte)'<', (byte)'/', (byte)'M', (byte)'e', (byte)'s', (byte)'s', (byte)'a', (byte)'g', (byte)'e', (byte)'I', (byte)'d', (byte)'>' };
     }
 }
