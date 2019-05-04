@@ -16,7 +16,7 @@ namespace Aws.Sqs.Client.Tests
         private const string Message = @"<Message><MessageId>5fea7756-0ea4-451a-a703-a558b933e274</MessageId><ReceiptHandle>MbZj6wDWli=</ReceiptHandle><MD5OfBody>fafb00f5732ab283681e124bf8747ed1</MD5OfBody><Body>This is a test message</Body><Attribute><Name>SentTimestamp</Name><Value>1238099229000</Value></Attribute></Message>";
 
         [Fact]
-        public void CountMessages_ShouldReturnZero_WhenPassedEmptyBytes()
+        public void CountMessages_ShouldReturnZero_WhenResponseContainsEmptyBytes()
         {
             var reader = new ReceiveMessageResponseReader();
 
@@ -36,7 +36,7 @@ namespace Aws.Sqs.Client.Tests
 
             count.Should().Be(0);
         }
-        
+
         [Theory]
         [MemberData(nameof(OneToTen))]
         public void CountMessages_ShouldReturnCorrectCount_WhenResponseContainsMessages(int messages)
@@ -63,7 +63,7 @@ namespace Aws.Sqs.Client.Tests
         {
             var sb = new StringBuilder();
             sb.Append(ResponseStart);
-            for (var i = 0; i < 11; i++)
+            for (var i = 0; i < 15; i++) // response with 15 messages
             {
                 sb.Append(Message);
             }
@@ -75,8 +75,59 @@ namespace Aws.Sqs.Client.Tests
 
             var count = reader.CountMessages(bytes);
 
-            count.Should().Be(10);
+            count.Should().Be(10, because: "An AWS SQS receive request returns a maximum of 10 messages");
         }
+
+        [Fact]
+        public void TryGetNextMessageBytes_ShouldReturnAppropriateTuple_WhenResponseBytesContainsEmptyBytes()
+        {
+            var reader = new ReceiveMessageResponseReader();
+
+            var messageFound = reader.TryGetNextMessageBytes(Array.Empty<byte>(), out var messageBytes, out var endPosition);
+
+            var isDefault = messageBytes == default;
+
+            messageFound.Should().BeFalse();
+            isDefault.Should().BeTrue();                      
+            endPosition.Should().Be(0);
+        }
+
+        [Fact]
+        public void TryGetNextMessageBytes_ShouldReturnAppropriateTuple_WhenResponseBytesContainsNoMessage()
+        {
+            var bytes = Encoding.UTF8.GetBytes(EmptyResponse);
+
+            var reader = new ReceiveMessageResponseReader();
+
+            var messageFound = reader.TryGetNextMessageBytes(bytes, out var messageBytes, out var endPosition);
+
+            var isDefault = messageBytes == default;
+
+            messageFound.Should().BeFalse();
+            isDefault.Should().BeTrue();
+            endPosition.Should().Be(0);
+        }
+
+        [Fact]
+        public void TryGetNextMessageBytes_ShouldReturnAppropriateTupleWithMessage_WhenResponseBytesContainsAMessage()
+        {
+            var sb = new StringBuilder();
+            sb.Append(ResponseStart);
+            sb.Append(Message);            
+            sb.Append(ResponseEnd);
+
+            var bytes = Encoding.UTF8.GetBytes(sb.ToString());
+
+            var reader = new ReceiveMessageResponseReader();
+
+            var messageFound = reader.TryGetNextMessageBytes(bytes, out var messageBytes, out var endPosition);
+
+            var messageSpanIsEqual = messageBytes.SequenceEqual(Encoding.UTF8.GetBytes(Message).AsSpan());
+
+            messageFound.Should().BeTrue();
+            messageSpanIsEqual.Should().BeTrue();
+            endPosition.Should().Be(ResponseStart.Length + Message.Length);
+        }      
 
         public static IEnumerable<object[]> OneToTen
         {
