@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HighPerfCloud.Aws.Sqs.Core
+namespace HighPerfCloud.Aws.Sqs.Core.Primitives
 {
     public readonly struct AwsRegion : IEquatable<AwsRegion>
     {
