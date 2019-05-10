@@ -9,11 +9,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aws.Sqs.Core", "src\Aws.Sqs
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C16EEE12-0D88-4997-B591-F01116E96400}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aws.Sqs.Client.Tests", "test\Aws.Sqs.Client.Tests\Aws.Sqs.Client.Tests.csproj", "{4FAF8727-F5B8-46E1-AE7D-0071AFBFD62D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aws.Sqs.Core.Tests", "test\Aws.Sqs.Client.Tests\Aws.Sqs.Core.Tests.csproj", "{4FAF8727-F5B8-46E1-AE7D-0071AFBFD62D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{177FEF0D-308E-4AE9-834E-7924D9EC7D07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aws.Sqs.Core.Benchmarks", "benchmarks\Aws.Sqs.Core.Benchmarks\Aws.Sqs.Core.Benchmarks.csproj", "{9CB808A0-A3FE-4FDC-99F0-C6E59081C878}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aws.Sqs.Core.Benchmarks", "benchmarks\Aws.Sqs.Core.Benchmarks\Aws.Sqs.Core.Benchmarks.csproj", "{9CB808A0-A3FE-4FDC-99F0-C6E59081C878}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{0D0E22A5-B9C1-448C-85EE-447A774B0CCA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsageSamples", "samples\UsageSamples\UsageSamples.csproj", "{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -61,6 +65,18 @@ Global
 		{9CB808A0-A3FE-4FDC-99F0-C6E59081C878}.Release|x64.Build.0 = Release|Any CPU
 		{9CB808A0-A3FE-4FDC-99F0-C6E59081C878}.Release|x86.ActiveCfg = Release|Any CPU
 		{9CB808A0-A3FE-4FDC-99F0-C6E59081C878}.Release|x86.Build.0 = Release|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Debug|x64.Build.0 = Debug|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Debug|x86.Build.0 = Debug|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Release|x64.ActiveCfg = Release|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Release|x64.Build.0 = Release|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Release|x86.ActiveCfg = Release|Any CPU
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -69,6 +85,7 @@ Global
 		{513272E9-5ACE-439A-BC8B-1F7542273C25} = {79C0FE98-F25D-4882-B264-F193B8CF9285}
 		{4FAF8727-F5B8-46E1-AE7D-0071AFBFD62D} = {C16EEE12-0D88-4997-B591-F01116E96400}
 		{9CB808A0-A3FE-4FDC-99F0-C6E59081C878} = {177FEF0D-308E-4AE9-834E-7924D9EC7D07}
+		{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050} = {0D0E22A5-B9C1-448C-85EE-447A774B0CCA}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1BD731A0-A9FB-42DA-A03C-708E871771D8}

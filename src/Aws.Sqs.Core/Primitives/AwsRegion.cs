@@ -53,5 +53,7 @@ namespace HighPerfCloud.Aws.Sqs.Core.Primitives
         public bool Equals(AwsRegion other) => (RegionCode) == (other.RegionCode);
 
         public override int GetHashCode() => HashCode.Combine(RegionCode);
+
+        public override string ToString() => RegionCode;
     }
 }
