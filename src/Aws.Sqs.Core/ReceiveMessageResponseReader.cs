@@ -49,7 +49,7 @@ namespace HighPerfCloud.Aws.Sqs.Core
             }
 
             endPosition = messageEndTagIndex + SqsResponseConstants.MessageTagEnd.Length;
-            messageBytes = responseBytes[messageStartTagIndex..endPosition];
+            messageBytes = responseBytes.Slice(messageStartTagIndex, endPosition - messageStartTagIndex);
 
             return true;
         }

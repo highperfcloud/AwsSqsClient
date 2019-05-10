@@ -2,7 +2,7 @@
 
 namespace HighPerfCloud.Aws.Sqs.Core.Primitives
 {
-    public readonly struct AccountId
+    public readonly struct AccountId : IEquatable<AccountId>
     {
         public AccountId(string accountId)
         {
@@ -36,5 +36,7 @@ namespace HighPerfCloud.Aws.Sqs.Core.Primitives
         public static implicit operator string(AccountId accountId) => accountId.Value;
 
         public static implicit operator AccountId(string accountId) => new AccountId(accountId);
+
+        public override string ToString() => Value;
     }
 }

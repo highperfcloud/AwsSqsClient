@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HighPerfCloud.Aws.Sqs.Core
 {
-    internal static class SqsMessageMemoryPool
+    internal static class SqsReceiveResponseMemoryPool
     {
         internal static ValueTask<IMemoryOwner<byte>> RentAndPopulateFromStreamAsync(Stream stream, int contentLength)
         {
@@ -14,25 +14,24 @@ namespace HighPerfCloud.Aws.Sqs.Core
 
             var readTask = stream.ReadAsync(buffer);
 
-            if (readTask.IsCompletedSuccessfully)
-                return new ValueTask<IMemoryOwner<byte>>(new SqsMessageMemoryOwner(buffer, contentLength));
+            return readTask.IsCompletedSuccessfully 
+                ? new ValueTask<IMemoryOwner<byte>>(new SqsReceiveResponseMemoryOwner(buffer, contentLength)) 
+                : AwaitAndReturnAsync(readTask, buffer, contentLength);
 
-            return AwaitAndReturnAsync(readTask, buffer);
-
-            async ValueTask<IMemoryOwner<byte>> AwaitAndReturnAsync(ValueTask<int> runningTask, byte[] localBuffer)
+            static async ValueTask<IMemoryOwner<byte>> AwaitAndReturnAsync(ValueTask<int> runningTask, byte[] localBuffer, int contentLength)
             {
                 await runningTask.ConfigureAwait(false);
 
-                return new SqsMessageMemoryOwner(localBuffer, contentLength);
+                return new SqsReceiveResponseMemoryOwner(localBuffer, contentLength);
             }
         }
 
-        private struct SqsMessageMemoryOwner : IMemoryOwner<byte>
+        private struct SqsReceiveResponseMemoryOwner : IMemoryOwner<byte>
         {
             private readonly int _length;
             private byte[]? _oversized;
 
-            internal SqsMessageMemoryOwner(byte[] oversized, int length)
+            internal SqsReceiveResponseMemoryOwner(byte[] oversized, int length)
             {
                 _length = length;
                 _oversized = oversized;
