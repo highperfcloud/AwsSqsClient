@@ -2,7 +2,7 @@
 using System;
 using Xunit;
 
-namespace Aws.Sqs.Client.Tests.Primitives
+namespace Aws.Sqs.Core.Tests.Primitives
 {
     public class AccountIdTests
     {

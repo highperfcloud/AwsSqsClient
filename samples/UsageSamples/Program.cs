@@ -16,15 +16,16 @@ namespace UsageSamples
 
         private static async Task Main(string[] args)
         {
-            var sb = new StringBuilder();
-            sb.Append(ResponseStart);
-            for (var i = 0; i < 3; i++)
+            for (int i = 0; i < 10; i++)
             {
-                sb.Append(Message);
+                await RentAndPopulateFromStreamAsync();
             }
-            sb.Append(ResponseEnd);
 
-            var bytes = Encoding.UTF8.GetBytes(sb.ToString());
+            await RentAndPopulateFromStreamAsync();
+         
+            Console.WriteLine("Done 1");
+
+            byte[] bytes = GetResponseBytes();
 
             await using var ms = new MemoryStream(bytes);
 
@@ -40,7 +41,7 @@ namespace UsageSamples
                 Console.WriteLine(message.MessageId);
             }
 
-            Console.WriteLine("Done 1");
+            Console.WriteLine("Done 2");
 
             await using var ms2 = new MemoryStream(bytes);
 
@@ -54,7 +55,7 @@ namespace UsageSamples
             if (response2.Content.Headers.ContentLength != null)
             {
                 using var reader2 = new LightweightMessageReader(contentStream,
-                    (int) response2.Content.Headers.ContentLength.Value);
+                    (int)response2.Content.Headers.ContentLength.Value);
 
                 await foreach (var message in reader2)
                 {
@@ -62,7 +63,33 @@ namespace UsageSamples
                 }
             }
 
-            Console.WriteLine("Done 2");
+            Console.WriteLine("Done 3");
+        }
+
+        private static async Task RentAndPopulateFromStreamAsync()
+        {
+            byte[] bytes = GetResponseBytes();
+
+            await using var ms = new MemoryStream(bytes);
+
+            using (var responseMemory = await SqsReceiveResponseMemoryPool.RentAndPopulateFromStreamAsync(ms, bytes.Length))
+            {
+                var memory = responseMemory.Memory; // We now have the bytes for the response that we can parse.
+            }
+        }
+
+        private static byte[] GetResponseBytes()
+        {
+            var sb = new StringBuilder();
+            sb.Append(ResponseStart);
+            for (var i = 0; i < 3; i++)
+            {
+                sb.Append(Message);
+            }
+            sb.Append(ResponseEnd);
+
+            var bytes = Encoding.UTF8.GetBytes(sb.ToString());
+            return bytes;
         }
     }
 }

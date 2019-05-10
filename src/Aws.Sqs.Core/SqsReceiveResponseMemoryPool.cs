@@ -10,28 +10,50 @@ namespace HighPerfCloud.Aws.Sqs.Core
     {
         internal static ValueTask<IMemoryOwner<byte>> RentAndPopulateFromStreamAsync(Stream stream, int contentLength)
         {
+            ValidateParameters(stream, contentLength);
+
             var buffer = ArrayPool<byte>.Shared.Rent(contentLength);
 
             var readTask = stream.ReadAsync(buffer);
 
-            return readTask.IsCompletedSuccessfully 
-                ? new ValueTask<IMemoryOwner<byte>>(new SqsReceiveResponseMemoryOwner(buffer, contentLength)) 
+            return readTask.IsCompletedSuccessfully
+                ? new ValueTask<IMemoryOwner<byte>>(new SqsResponseMemoryOwner(buffer, contentLength))
                 : AwaitAndReturnAsync(readTask, buffer, contentLength);
 
             static async ValueTask<IMemoryOwner<byte>> AwaitAndReturnAsync(ValueTask<int> runningTask, byte[] localBuffer, int contentLength)
             {
                 await runningTask.ConfigureAwait(false);
 
-                return new SqsReceiveResponseMemoryOwner(localBuffer, contentLength);
+                return new SqsResponseMemoryOwner(localBuffer, contentLength);
             }
+        }        
+
+        internal static IMemoryOwner<byte>? RentAndPopulateFromStream(Stream stream, int contentLength)
+        {
+            ValidateParameters(stream, contentLength);
+
+            var buffer = ArrayPool<byte>.Shared.Rent(contentLength);
+
+            stream.Read(buffer);
+
+            return new SqsResponseMemoryOwner(buffer, contentLength);
         }
 
-        private struct SqsReceiveResponseMemoryOwner : IMemoryOwner<byte>
+        private static void ValidateParameters(Stream stream, int contentLength)
+        {
+            if (!stream.CanRead)
+                throw new ArgumentException(message: "The stream must be readable", paramName: nameof(stream));
+
+            if (contentLength <= 0)
+                throw new ArgumentException(message: "Content length must be a non-negative value, greater than 1", paramName: nameof(contentLength));
+        }
+
+        private sealed class SqsResponseMemoryOwner : IMemoryOwner<byte>
         {
             private readonly int _length;
             private byte[]? _oversized;
 
-            internal SqsReceiveResponseMemoryOwner(byte[] oversized, int length)
+            internal SqsResponseMemoryOwner(byte[] oversized, int length)
             {
                 _length = length;
                 _oversized = oversized;

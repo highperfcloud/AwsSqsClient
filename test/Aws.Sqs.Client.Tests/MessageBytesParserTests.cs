@@ -4,7 +4,7 @@ using System;
 using System.Text;
 using Xunit;
 
-namespace Aws.Sqs.Client.Tests
+namespace Aws.Sqs.Core.Tests
 {
     public class MessageBytesParserTests
     {

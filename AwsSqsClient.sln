@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aws.Sqs.Core", "src\Aws.Sqs
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{C16EEE12-0D88-4997-B591-F01116E96400}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aws.Sqs.Client.Tests", "test\Aws.Sqs.Client.Tests\Aws.Sqs.Client.Tests.csproj", "{4FAF8727-F5B8-46E1-AE7D-0071AFBFD62D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aws.Sqs.Core.Tests", "test\Aws.Sqs.Client.Tests\Aws.Sqs.Core.Tests.csproj", "{4FAF8727-F5B8-46E1-AE7D-0071AFBFD62D}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "benchmarks", "benchmarks", "{177FEF0D-308E-4AE9-834E-7924D9EC7D07}"
 EndProject
@@ -17,7 +17,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Aws.Sqs.Core.Benchmarks", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "samples", "samples", "{0D0E22A5-B9C1-448C-85EE-447A774B0CCA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UsageSamples", "samples\UsageSamples\UsageSamples.csproj", "{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UsageSamples", "samples\UsageSamples\UsageSamples.csproj", "{1ACF3E3C-7C7B-43EA-BF3B-8AF653956050}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

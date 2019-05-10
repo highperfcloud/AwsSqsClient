@@ -21,7 +21,7 @@ namespace HighPerfCloud.Aws.Sqs.Core
         {
         }
 
-        public LightweightMessageReader(HttpContent httpContent)
+        public LightweightMessageReader(HttpContent? httpContent)
         {
             _httpContent = httpContent ?? throw new ArgumentNullException(nameof(httpContent));
 
